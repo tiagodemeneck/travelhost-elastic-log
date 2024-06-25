@@ -1,0 +1,21 @@
+{
+    "name": "travelhost/elastic-log",
+    "description": "Package that will help our team to manage logs from elasticsearch",
+    "type": "library",
+    "version": "1.0",
+    "authors": [
+        {
+            "name": "Tiago Reis Demeneck",
+            "email": "tiago.demeneck@travelhost.com.br"
+        }
+    ],
+    "require": {
+        "php":">=7.4"
+    },
+    "minimum-stability": "dev",
+    "autoload": {
+        "psr-4": {
+            "Travelhost\\":["src/Travelhost"]
+        }
+    }
+}
