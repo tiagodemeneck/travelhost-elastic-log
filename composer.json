@@ -10,12 +10,18 @@
         }
     ],
     "require": {
-        "php":">=7.4"
+        "php":">=7.4",
+        "elasticsearch/elasticsearch": "dev-main"
     },
     "minimum-stability": "dev",
     "autoload": {
         "psr-4": {
             "Travelhost\\":["src/Travelhost"]
+        }
+    },
+    "config": {
+        "allow-plugins": {
+            "php-http/discovery": true
         }
     }
 }
