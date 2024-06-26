@@ -2,7 +2,7 @@
     "name": "travelhost/elastic-log",
     "description": "Package that will help our team to manage logs from elasticsearch",
     "type": "library",
-    "version": "1.1",
+    "version": "1.2",
     "authors": [
         {
             "name": "Tiago Reis Demeneck",
@@ -11,7 +11,7 @@
     ],
     "require": {
         "php":">=7.4",
-        "elasticsearch/elasticsearch": "dev-main"
+        "mailerlite/laravel-elasticsearch": "^11.0"
     },
     "minimum-stability": "dev",
     "autoload": {

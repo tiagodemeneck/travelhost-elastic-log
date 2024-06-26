@@ -2,8 +2,7 @@
 
 namespace Travelhost;
 
-use Elastic\Elasticsearch\Client;
-use Elastic\Elasticsearch\ClientBuilder;
+use Elasticsearch\ClientBuilder;
 
 class ElasticLog{
 
