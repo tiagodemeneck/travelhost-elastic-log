@@ -17,7 +17,7 @@ class ElasticLog{
 
     public function budgetActionsReport(string $indexName){
 
-        $logs = $this->client->search(['indexName' => $indexName]);
+        $logs = $this->client->search(['index' => $indexName]);
         return $logs;
     }
 }
