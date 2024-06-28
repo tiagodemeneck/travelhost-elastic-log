@@ -33,6 +33,7 @@ class ElasticLog{
     public function registerLog(array $parameters){
 
         $this->indexExists();
+        $parameters['level'] = self::$level;
         $this->client->index($parameters);
     }
 
