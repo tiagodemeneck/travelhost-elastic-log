@@ -39,7 +39,7 @@ class ElasticLog{
 
     private function indexExists(){
 
-        if(!$this->client->indices()->exists(['indexName' => 'logs'])){
+        if(!$this->client->indices()->exists(['index' => 'logs'])){
 
             $this->client->create($this->getIndexParameters());
         }
