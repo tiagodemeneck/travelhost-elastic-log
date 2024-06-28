@@ -2,7 +2,7 @@
     "name": "travelhost/elastic-log",
     "description": "Package that will help our team to manage logs from elasticsearch",
     "type": "library",
-    "version": "1.5",
+    "version": "1.5.1",
     "authors": [
         {
             "name": "Tiago Reis Demeneck",
