@@ -59,7 +59,7 @@ class ElasticLog{
     private function getIndexParameters(){
 
         return [
-        "index" => "logs",
+        "index" => env('ELASTICSEARCH_LOG_INDEX'),
         "id" => "id",
         'body' => [
             'settings' => [
