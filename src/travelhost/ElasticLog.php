@@ -3,6 +3,7 @@
 namespace Travelhost;
 
 use Elasticsearch\ClientBuilder;
+use Exception;
 
 class ElasticLog{
 
@@ -39,7 +40,8 @@ class ElasticLog{
 
     private function indexExists(){
 
-        if(!$this->client->indices()->exists(['index' => 'logs'])){
+        if(!env("ELASTIC_INDEX")) throw new Exception("ELASTIC_INDEX missing in your .env file.");
+        if(!$this->client->indices()->exists(['index' => env('ELASTIC_INDEX')])){
 
             $this->client->create($this->getIndexParameters());
         }
