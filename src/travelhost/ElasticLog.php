@@ -4,6 +4,7 @@ namespace Travelhost;
 
 use Elasticsearch\ClientBuilder;
 use Exception;
+use Illuminate\Support\Facades\Log;
 
 class ElasticLog{
 
@@ -33,15 +34,22 @@ class ElasticLog{
     }
     public function registerLog(array $parameters){
 
-        $this->indexExists();
-        $parameters['level'] = self::$level;
-        $this->client->index($parameters);
+        try{
+            
+            $this->indexExists();
+            $parameters['level'] = self::$level;
+            $this->client->index($parameters);
+        }
+        catch(Exception $e){
+            Log::error("ElasticLog", $e->getMessage());
+        }
+        
     }
 
     private function indexExists(){
 
-        if(!env("ELASTIC_INDEX")) throw new Exception("ELASTIC_INDEX missing in your .env file.");
-        if(!$this->client->indices()->exists(['index' => env('ELASTIC_INDEX')])){
+        if(!env("ELASTICSEARCH_LOG_INDEX")) throw new Exception("ELASTICSEARCH_LOG_INDEX missing in your .env file.");
+        if(!$this->client->indices()->exists(['index' => env('ELASTICSEARCH_LOG_INDEX')])){
 
             $this->client->create($this->getIndexParameters());
         }
