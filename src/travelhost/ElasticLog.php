@@ -38,7 +38,7 @@ class ElasticLog{
             
             $this->indexExists();
             $parameters['level'] = self::$level;
-            $this->client->index($parameters);
+            $this->client->index(['index' => env("ELASTICSEARCH_LOG_INDEX"), "body" => $parameters]);
         }
         catch(Exception $e){
             Log::error("ElasticLog", $e->getMessage());
@@ -51,7 +51,7 @@ class ElasticLog{
         if(!env("ELASTICSEARCH_LOG_INDEX")) throw new Exception("ELASTICSEARCH_LOG_INDEX missing in your .env file.");
         if(!$this->client->indices()->exists(['index' => env('ELASTICSEARCH_LOG_INDEX')])){
 
-            $this->client->create(["index" => env("ELASTICSEARCH_LOG_INDEX"), 'body' => $this->getIndexParameters()]);
+            $this->client->create($this->getIndexParameters());
         }
 
     }
