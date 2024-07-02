@@ -63,12 +63,18 @@ class ElasticLog{
                 "index" => env('ELASTICSEARCH_LOG_INDEX'),
                 'body' => [
                     'query' => [
-                        'range' => [
-                            'created_at' => [
-                                'level' => self::$level,
-                                'gte' => $parameters['dates']['startDate'],
-                                'lte' => $parameters['dates']['endDate']
-                            ]
+                        "bool" => [
+                            "must" => [ [
+                                'match' => [
+                                    'level' => self::$level
+                                ],
+                                'range' => [
+                                    'created_at' => [
+                                        'gte' => $parameters['dates']['startDate'],
+                                        'lte' => $parameters['dates']['endDate']
+                                    ]
+                                ]
+                            ] ]
                         ]
                     ]
                 ]
@@ -81,10 +87,19 @@ class ElasticLog{
                 'index' => env('ELASTICSEARCH_LOG_INDEX'),
                 'body' => [
                     'query' => [
-                        "query_string" => [
-                            "default_field" => "context",
-                            "query" => "*$keyword*"
+                        "bool" => [
+                            "must" =>[ [
+                                "query_string" => [
+                                    "default_field" => "context",
+                                    "query" => "*$keyword*"
+                                ]],
+                                [
+                                'match' => [
+                                    'level' => self::$level
+                                ]]
+                            ]
                         ]
+                        
                     ]
                 ]
             ];
