@@ -58,7 +58,7 @@ class ElasticLog{
 
     private function setSearchParameters(&$parameters):void{
 
-        if($parameters['dates']){
+        if(isset($parameters['dates'])){
             $parameters = [
                 "index" => env('ELASTICSEARCH_LOG_INDEX'),
                 'body' => [
@@ -81,7 +81,7 @@ class ElasticLog{
             ];
         }
        
-        else if($parameters['keyword'] && is_string($parameters['keyword'])){
+        else if(isset($parameters['keyword']) && is_string($parameters['keyword'])){
             $keyword = $parameters["keyword"];
             $parameters = [
                 'index' => env('ELASTICSEARCH_LOG_INDEX'),
