@@ -46,6 +46,51 @@ class ElasticLog{
         
     }
 
+    public function searchLogs(array $parameters){
+
+        $this->setSearchParameters($parameters);
+        $elasticResponse = $this->client->search($parameters);
+        if(count($elasticResponse["hits"]["hits"]) == 0){
+            return [];
+        }
+        return $elasticResponse["hits"]["hits"];
+    }
+
+    private function setSearchParameters(&$parameters):void{
+
+        if($parameters['dates']){
+            $parameters = [
+                "index" => env('ELASTICSEARCH_LOG_INDEX'),
+                'body' => [
+                    'query' => [
+                        'range' => [
+                            'created_at' => [
+                                'level' => self::$level,
+                                'gte' => $parameters['dates']['startDate'],
+                                'lte' => $parameters['dates']['endDate']
+                            ]
+                        ]
+                    ]
+                ]
+            ];
+        }
+       
+        else if($parameters['keyword'] && is_string($parameters['keyword'])){
+            $keyword = $parameters["keyword"];
+            $parameters = [
+                'index' => env('ELASTICSEARCH_LOG_INDEX'),
+                'body' => [
+                    'query' => [
+                        "query_string" => [
+                            "default_field" => "context",
+                            "query" => "*$keyword*"
+                        ]
+                    ]
+                ]
+            ];
+        }
+    }
+
     private function indexExists(){
 
         if(!env("ELASTICSEARCH_LOG_INDEX")) throw new Exception("ELASTICSEARCH_LOG_INDEX missing in your .env file.");
