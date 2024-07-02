@@ -64,17 +64,17 @@ class ElasticLog{
                 'body' => [
                     'query' => [
                         "bool" => [
-                            "must" => [ [
-                                'match' => [
+                            "must" => [ 
+                                ['match' => [
                                     'level' => self::$level
-                                ],
-                                'range' => [
+                                ]],
+                                ['range' => [
                                     'created_at' => [
                                         'gte' => $parameters['dates']['startDate'],
                                         'lte' => $parameters['dates']['endDate']
                                     ]
-                                ]
-                            ] ]
+                                ]]
+                            ]
                         ]
                     ]
                 ]
