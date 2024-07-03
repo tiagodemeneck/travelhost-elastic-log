@@ -32,10 +32,14 @@ class ElasticLog{
         self::$level = 'warning';
         return new self();
     }
-    public function registerLog(array $parameters){
+    /**
+     * @param array $parameters Parametros esperados dentro do array: context(string), message(string) e created_at(Y-m-d)
+     * @return void
+     */
+    public function registerLog(array $parameters):void{
 
         try{
-            
+
             $this->indexExists();
             $parameters['level'] = self::$level;
             $this->client->index(['index' => env("ELASTICSEARCH_LOG_INDEX"), "body" => $parameters]);
@@ -46,6 +50,12 @@ class ElasticLog{
         
     }
 
+    /**
+     * @param array $parameters Você pode passar, duas datas dentro de um array dates,
+     * startDate e endDate, ['dates' => ['startdate' => 'Y-m-d', 'endDate' => 'Y-m-d]],
+     * ou você pode passar uma keyword, ['keyword' => :keyword]
+     * @return array $logs
+     */
     public function searchLogs(array $parameters){
 
         $this->setSearchParameters($parameters);
