@@ -16,7 +16,7 @@ class ElasticLog{
         $this->client = ClientBuilder::create()->setHosts([env('ELASTICSEARCH_HOST')])->build();           
     }
 
-
+    /** Level do log */
     public static function error(){
 
         self::$level = 'error';
